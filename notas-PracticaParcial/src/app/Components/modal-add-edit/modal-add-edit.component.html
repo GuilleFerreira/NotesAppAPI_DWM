@@ -1,6 +1,6 @@
 
 <div class="modal-header">
-    <h5 class="fs-4 w-100 text-center">{{ titulo }}</h5>
+    <h5 class="fs-4 w-100 text-center">{{titulo}}</h5>
     <button type="button" class="btn-close" (click)="modalActivo.dismiss()"></button>
 </div>
 <div class="modal-body">
@@ -22,5 +22,5 @@
     <textarea class="form-control textoModal mb-2" placeholder="Escriba su nota." [(ngModel)]="nota.description"></textarea>
 </div>
 <div class="modal-footer justify-content-center">
-    <button type="button" class="btn btn-primary" (click)="guardarNota()">{{ textoBoton }}</button>
+    <button type="button" class="btn btn-primary" (click)="guardarNota()">{{textoBoton}}</button>
 </div>

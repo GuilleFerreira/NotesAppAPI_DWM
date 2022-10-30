@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Note } from '../Interfaces/Note';
 import { CITYS } from '../Mocks/mock-ciudades';
 import { TemperaturaService } from './temperatura.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -32,17 +32,19 @@ export class NoteServiceService {
   getNote(id : String): Observable<Note[]> {
     return this.http.get<Note[]>(this.notesUrl+"/note/"+id);
   }
-/*
-  editNote(id : String, nota): void{
-    this.http.put(this.notesUrl+"/note/"+id);
+
+  addNote(note: Note){
+    this.http.post(this.notesUrl+"/note", note);
   }
-*/
+
+  editNote(note: Note){
+    this.http.put(this.notesUrl+"/notes/"+note.id, note);
+  }
+
   deleteNote(id : string){
-    this.http.delete(this.notesUrl+"/notes/"+id);
     this.http.delete(this.notesUrl+"/notes/"+id).subscribe(x => {
       this.notas?.delete(id);
     });
-
   }
 
   formatearFecha(fecha: Date){
@@ -75,29 +77,10 @@ export class NoteServiceService {
   }
   }
 
-  fillNotes(colors : string[]){
-    let noteAux = new Map<string, Note>();
-    for(let nota of this.invisibleNotes!){
-        this.notas?.set(nota[0],nota[1]);
-        noteAux.set(nota[0],nota[1]);
-    }
-    for(let noteKey of noteAux.keys()){
-      this.invisibleNotes?.delete(noteKey);
-    }
-    noteAux = new Map<string, Note>();
-    for(let nota of this.notas!) {
-        this.invisibleNotes?.set(nota[0],nota[1]);
-        noteAux.set(nota[0],nota[1]);
-    }
-    for(let noteKey of noteAux.keys()){
-      this.notas?.delete(noteKey);
-    }
-  }
-
-  editarNota(nota: Note) {
-    if (this.notas) {
-      nota.date = this.formatearFecha(new Date(nota.date));
-      this.notas.set(nota.id, nota);
-    }
-  }
+  // editarNota(nota: Note) {
+  //   if (this.notas) {
+  //     nota.date = this.formatearFecha(new Date(nota.date));
+  //     this.notas.set(nota.id, nota);
+  //   }
+  // }
 }

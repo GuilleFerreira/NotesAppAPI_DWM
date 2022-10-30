@@ -11,6 +11,7 @@ import { NoteServiceService } from 'src/app/Services/note-service.service';
 export class ModalDeleteComponent implements OnInit {
 
   @Input() noteId!: string;
+
   constructor(public modalActivo: NgbActiveModal, private noteService: NoteServiceService,  private route: Router) { }
 
   ngOnInit(): void {
@@ -19,8 +20,8 @@ export class ModalDeleteComponent implements OnInit {
   delete() {
     this.noteService.deleteNote(this.noteId);
     console.log(this.noteId);
-    this.route.navigate(['']);
     this.modalActivo.close();
+    window.location.reload();
   }
 
   cancel() {

@@ -1,9 +1,7 @@
 import { Component, OnInit, Input} from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Note } from 'src/app/Interfaces/Note';
+import { EmptyNote, Note } from 'src/app/Interfaces/Note';
 import { CITYS } from 'src/app/Mocks/mock-ciudades';
-import { COLOURS } from 'src/app/Mocks/mock-colores';
-import { Color } from 'src/app/Interfaces/Color';
 
 import { NoteServiceService } from 'src/app/Services/note-service.service';
 
@@ -16,16 +14,15 @@ export class ModalAddEditComponent implements OnInit {
 
   @Input() notaEntrada?: Note;
 
+  nota: EmptyNote = new EmptyNote();
   titulo: string = 'Agregar Nota';
   textoBoton: string = 'Agregar';
 
   // Datos mockeados
   ciudades: string[] = [];
-  
-  colores: Color[] = COLOURS;
-  nota!: { id: string; title: string; cityid: string; description: string; date: string; temperature: string; };
+  //nota!: { id: string; title: string; cityid: string; description: string; date: string; temperature: string; };
 
-  constructor(public modalActivo: NgbActiveModal, private servicioNotas: NoteServiceService) { }
+  constructor(public modalActivo: NgbActiveModal, private noteService: NoteServiceService) { }
 
   ngOnInit(): void {
     if (this.notaEntrada) {
@@ -53,9 +50,11 @@ export class ModalAddEditComponent implements OnInit {
         alert("Seleccione una ciudad")
         return;
       }
-      this.servicioNotas.crearNota(this.nota);
+      console.log(this.nota);
+      this.noteService.addNote(this.nota);
     } else {
-      this.servicioNotas.editarNota(this.nota);
+      console.log(this.nota);
+      this.noteService.editNote(this.nota);
     }
     this.modalActivo.close();
   }
