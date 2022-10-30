@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="row" id="tarjetas">
+        <div class="col-sm-4 mb-3" *ngFor="let nota of notas | keyvalue">
+            <app-note [note]="nota.value"></app-note>
+        </div>
+    </div>
+</div>
+
+<div class="fixed-button position-fixed bottom-0 start-0 mb-4">
+    <div>
+        <p class="mb-0 ms-2 fs-6 fw-light">Modo nocturno</p>
+    </div>
+    <div class="form-check form-switch d-flex d-flex align-items-start">
+        <input #toggle class="form-check-input btn-primary m-1" type="checkbox" role="switch" id="flexSwitchCheckChecked" (click)="darkMode()">
+    </div>
+</div>

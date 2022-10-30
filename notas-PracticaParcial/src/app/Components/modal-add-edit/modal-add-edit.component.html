@@ -1,0 +1,26 @@
+
+<div class="modal-header">
+    <h5 class="fs-4 w-100 text-center">{{ titulo }}</h5>
+    <button type="button" class="btn-close" (click)="modalActivo.dismiss()"></button>
+</div>
+<div class="modal-body">
+    <!-- Título -->
+    <input type="text" class="my-2 form-control" placeholder="Titulo de la nota." [(ngModel)]="nota.title">
+    <!-- Ciudad -->
+    <select #city class="form-select" placeholder="Ciudad" [(ngModel)]="nota.cityid">
+        <option selected disabled value="">Seleccione una ciudad</option>
+        <option *ngFor="let ciudad of ciudades" value="{{ciudad}}">{{ciudad}}</option>
+    </select>
+    <!-- Fecha y hora -->
+    <div class="input-group">
+        <div class="input-group">
+            <label class="input-group-text my-2" for="fechaTarjetaEditar">Fecha y hora</label>
+            <input class="my-2 form-control" type="datetime-local" id="fechaTarjetaEditar" [(ngModel)]="nota.date">
+        </div>
+    </div>
+    <!-- Cuerpo -->
+    <textarea class="form-control textoModal mb-2" placeholder="Escriba su nota." [(ngModel)]="nota.description"></textarea>
+</div>
+<div class="modal-footer justify-content-center">
+    <button type="button" class="btn btn-primary" (click)="guardarNota()">{{ textoBoton }}</button>
+</div>

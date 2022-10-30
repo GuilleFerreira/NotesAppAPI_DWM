@@ -1,0 +1,21 @@
+<div *ngIf="note">
+    <div id="{{note.id}}" class="card" (click)="abrirModalEditar()">
+        <div class="card-header">
+            <h5 id="{{note.id}}TargetTitle" class="card-title w-100 text-center">{{note.title}}</h5>
+        </div>
+        <div class="card-body">
+            <p id="{{note.id}}TargetText" class="card-text">{{note.description}}</p>
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-danger btn-outline-dark" (click)="openModalDelete();$event.stopPropagation()">
+                    <i class="text-light"><img src="./assets/basura.png" alt="borrar" width="20vw" height="20vh"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-footer container">
+            <div class="row">
+                <p class="col fw-light" id="{{note.id}}TargetCity">{{note.cityid}} - {{note.temperature}}</p>
+                <p class="col-auto fw-light text-end" id="{{note.id}}TargetDate">{{note.date}}</p>
+            </div>
+        </div>
+    </div>
+</div>
