@@ -25,23 +25,15 @@ export class ModalAddEditComponent implements OnInit {
   constructor(public modalActivo: NgbActiveModal, private noteService: NoteServiceService) { }
 
   ngOnInit(): void {
+    for(const city in CITYS){
+      this.ciudades.push(city)
+    }
     if (this.notaEntrada) {
       this.titulo = 'Editar Nota';
       this.textoBoton = 'Editar';
       this.nota = { ...this.notaEntrada };
-      this.nota.date = this.formatearFecha(this.notaEntrada.date);
+      this.nota.date = this.notaEntrada.date;
     }
-    for(const city in CITYS){
-      this.ciudades.push(city)
-    }
-  }
-
-  formatearFecha(input: string): string {
-    const fechaAPoner = input.split(" ");
-    let dias = fechaAPoner[0].split("/");
-    dias[1] = dias[1].length < 2? `0${dias[1]}` : dias[1];
-    dias[0] = dias[0].length < 2? `0${dias[0]}` : dias[0];
-    return `${dias[2]}-${dias[1]}-${dias[0]}T${fechaAPoner[1]}`;
   }
 
   guardarNota() {
@@ -51,9 +43,9 @@ export class ModalAddEditComponent implements OnInit {
         return;
       }
       console.log(this.nota);
-      this.noteService.addNote(this.nota);
+      this.noteService.crearNota(this.nota);
     } else {
-      console.log(this.nota);
+      console.log("edit " + this.nota);
       this.noteService.editNote(this.nota);
     }
     this.modalActivo.close();

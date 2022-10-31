@@ -34,11 +34,16 @@ export class NoteServiceService {
   }
 
   addNote(note: Note){
-    this.http.post(this.notesUrl+"/note", note);
+    const headers = { 'content-type': 'application/json'};
+    const body = JSON.stringify(note);
+    console.log(body);
+    return this.http.post(this.notesUrl+"/note", body,{'headers':headers});
   }
 
   editNote(note: Note){
-    this.http.put(this.notesUrl+"/notes/"+note.id, note);
+    const body = JSON.stringify(note);
+    console.log(body);
+    this.http.put(this.notesUrl+"/notes/"+note.id, body);
   }
 
   deleteNote(id : string){
@@ -50,7 +55,7 @@ export class NoteServiceService {
   formatearFecha(fecha: Date){
     const minutos = fecha.getMinutes() < 10 ? `0${fecha.getMinutes()}` : fecha.getMinutes();
     const tiempo = `${ fecha.getHours() }:${ minutos }`;
-    return`${new Intl.DateTimeFormat('es-ES').format(fecha)} ${tiempo}`;
+    return`${new Intl.DateTimeFormat('es-ES').format(fecha)}`;
   }
 
   crearNota(nota: Note) {
@@ -64,6 +69,7 @@ export class NoteServiceService {
         lat: CITYS[nota.cityid].lat,
         long: CITYS[nota.cityid].long
       }
+      this.addNote(nota);
       try {
         this.servicioTemperatura.getWeather(fecha, ciudad)
         .subscribe(x => {
@@ -77,10 +83,11 @@ export class NoteServiceService {
   }
   }
 
-  // editarNota(nota: Note) {
-  //   if (this.notas) {
-  //     nota.date = this.formatearFecha(new Date(nota.date));
-  //     this.notas.set(nota.id, nota);
-  //   }
-  // }
+  editarNota(nota: Note) {
+     if (this.notas) {
+     nota.date = this.formatearFecha(new Date(nota.date));
+     this.notas.set(nota.id, nota);
+      this.editNote(nota);
+     }
+ }
 }
